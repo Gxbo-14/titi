@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Aquí lo tienes!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffe5ec;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .contenido-central {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #4a353d;
+            font-size: 2.5rem;
+            margin: 0 0 20px 0;
+        }
+
+        .image-container {
+            width: 300px;
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 20px;
+            animation: latidoBeso 1.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes latidoBeso {
+            0% { transform: scale(0.95); }
+            100% { transform: scale(1.15); }
+        }
+
+        .texto-esquina {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            color: #ff8fab;
+            font-size: 0.85rem;
+            font-style: italic;
+            z-index: 20;
+            opacity: 0.8;
+        }
+
+        .corazon {
+            position: absolute;
+            bottom: -50px;
+            color: #ff758f;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            animation: volar 4s linear infinite;
+        }
+
+        @keyframes volar {
+            0 { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="audio-beso" src="only.mp3" loop></audio>
+
+    <div class="contenido-central">
+        <h1>aquí lo tienes</h1>
+        
+        <div class="image-container">
+            <img src="beso_dado.jpg" alt="Beso">
+        </div>
+    </div>
+
+    <div class="texto-esquina">ahora pon que no</div>
+
+    <script>
+        const audioBeso = document.getElementById('audio-beso');
+
+        // Al cargar la página, revisamos si la música estaba sonando y en qué segundo se quedó
+        window.addEventListener('DOMContentLoaded', () => {
+            const tiempoGuardado = localStorage.getItem('tiempoMusica');
+            const estabaSonando = localStorage.getItem('musicaSonando');
+
+            if (tiempoGuardado) {
+                audioBeso.currentTime = parseFloat(tiempoGuardado);
+            }
+
+            // Si la música estaba activa en la pestaña anterior, la reproducimos de inmediato
+            if (estabaSonando === 'true') {
+                audioBeso.play().catch(err => console.log("Permiso de reproducción requerido:", err));
+            }
+        });
+
+        // Corazones flotantes
+        function crearCorazon() {
+            const corazon = document.createElement('div');
+            corazon.classList.add('corazon');
+            corazon.innerHTML = '❤️';
+            
+            corazon.style.left = Math.random() * 100 + "vw";
+            corazon.style.fontSize = Math.random() * 15 + 12 + "px";
+            corazon.style.animationDuration = Math.random() * 2 + 3 + "s";
+
+            document.body.appendChild(corazon);
+
+            setTimeout(() => { corazon.remove(); }, 4500);
+        }
+
+        setInterval(crearCorazon, 250);
+    </script>
+
+</body>
+</html>
