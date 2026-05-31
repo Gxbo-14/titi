@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Quieres un beso?</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #ffe5ec;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Collages Laterales */
+        .collage-lateral {
+            width: 24%;
+            height: 95vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: repeat(4, 1fr);
+            gap: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .collage-lateral img {
+            width: 115%;
+            height: 110%;
+            object-fit: cover;
+            border: 4px solid white;
+            border-radius: 4px;
+            box-shadow: 2px 4px 10px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease, z-index 0.2s;
+            position: relative;
+        }
+
+        .collage-lateral img:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 50 !important;
+            box-shadow: 4px 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .collage-lateral img:nth-child(odd) { transform: rotate(-5deg) translate(-5px, 5px); z-index: 2; }
+        .collage-lateral img:nth-child(even) { transform: rotate(6deg) translate(8px, -5px); z-index: 1; }
+        .collage-lateral img:nth-child(3n) { transform: rotate(-3deg) translate(5px, -8px); z-index: 3; }
+        .collage-lateral img:nth-child(4n) { transform: rotate(4deg) translate(-8px, 4px); z-index: 2; }
+
+        /* Contenido Centro */
+        .contenido-centro {
+            width: 48%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            background-color: rgba(255, 229, 236, 0.8);
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        h1 {
+            color: #4a353d;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .image-container {
+            width: 100%;
+            max-width: 420px;
+            margin-bottom: 30px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            height: 50px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+        }
+
+        #btn-si { background-color: #ff758f; color: white; }
+        #btn-no { background-color: #ff758f; color: white; position: relative; }
+
+        /* --- CONTENEDOR DEL ICONO AUDIO AJUSTADO AL EJE DE LA IMAGEN DE ARRIBA --- */
+        .music-control-container {
+            width: 100%;
+            max-width: 420px; /* Exactamente el mismo ancho que la imagen de arriba */
+            margin-top: 15px;
+            display: flex;
+            justify-content: flex-start; /* Lo alinea con el borde izquierdo de la imagen */
+        }
+
+        .btn-audio {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 35px; /* Tamaño del icono */
+            height: 35px;
+            transition: transform 0.2s;
+            user-select: none;
+        }
+
+        .btn-audio:hover {
+            transform: scale(1.15);
+        }
+
+        .btn-audio img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 5px; /* Un pequeño borde suave si tu imagen lo ocupa */
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="audio-principal" src="only.mp3" loop></audio>
+
+    <div class="collage-lateral">
+        <img src="foto1.jpeg" alt="Foto 1"><img src="foto2.jpeg" alt="Foto 2"><img src="foto3.jpeg" alt="Foto 3"><img src="foto4.jpeg" alt="Foto 4"><img src="foto5.jpeg" alt="Foto 5"><img src="foto6.jpeg" alt="Foto 6"><img src="foto7.jpeg" alt="Foto 7"><img src="foto8.jpeg" alt="Foto 8">
+    </div>
+
+    <div class="contenido-centro">
+        <h1>¿Quieres un beso?</h1>
+
+        <div class="image-container">
+            <img src="fotocontiti.jpeg" alt="Foto Principal">
+        </div>
+
+        <div class="button-group">
+            <button id="btn-si" class="btn">Sí</button>
+            <button id="btn-no" class="btn">No</button>
+        </div>
+
+        <div class="music-control-container">
+            <button id="btn-musica" class="btn-audio" title="Reproducir música">
+                <img src="audio.jpg" alt="Música">
+            </button>
+        </div>
+    </div>
+
+    <div class="collage-lateral">
+        <img src="foto9.jpeg" alt="Foto 9"><img src="foto10.jpeg" alt="Foto 10"><img src="foto11.jpeg" alt="Foto 11"><img src="foto12.jpeg" alt="Foto 12"><img src="foto13.jpeg" alt="Foto 13"><img src="foto14.jpeg" alt="Foto 14"><img src="foto15.jpeg" alt="Foto 15"><img src="foto16.jpeg" alt="Foto 16">
+    </div>
+
+    <script>
+        const btnNo = document.getElementById('btn-no');
+        const btnSi = document.getElementById('btn-si');
+        const audio = document.getElementById('audio-principal');
+        const btnMusica = document.getElementById('btn-musica');
+
+        btnMusica.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                localStorage.setItem('musicaSonando', 'true');
+            } else {
+                audio.pause();
+                localStorage.setItem('musicaSonando', 'false');
+            }
+        });
+
+        btnSi.addEventListener('click', () => {
+            localStorage.setItem('tiempoMusica', audio.currentTime);
+            window.location.href = 'beso.html';
+        });
+
+        btnNo.addEventListener('mousemove', (e) => {
+            const rect = btnNo.getBoundingClientRect();
+            const centroX = rect.left + rect.width / 2;
+            const centroY = rect.top + rect.height / 2;
+            const difX = e.clientX - centroX;
+            const difY = e.clientY - centroY;
+            const fuerza = 80; 
+
+            let nuevoX = rect.left - (difX * (fuerza / Math.abs(difX || 1)));
+            let nuevoY = rect.top - (difY * (fuerza / Math.abs(difY || 1)));
+
+            const margen = 20;
+            if (nuevoX < margen) nuevoX = margen;
+            if (nuevoX > window.innerWidth - rect.width - margen) nuevoX = window.innerWidth - rect.width - margen;
+            if (nuevoY < margen) nuevoY = margen;
+            if (nuevoY > window.innerHeight - rect.height - margen) nuevoY = window.innerHeight - rect.height - margen;
+
+            btnNo.style.position = "absolute";
+            btnNo.style.left = nuevoX + "px";
+            btnNo.style.top = nuevoY + "px";
+        });
+    </script>
+
+</body>
+</html>
